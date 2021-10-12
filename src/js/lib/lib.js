@@ -1,4 +1,11 @@
+// core import
 import $ from './core';
-import './modules/display';
 
+// modules import
+import './modules/display';
+import './modules/classes';
+import './modules/attributes';
+import './modules/handlers';
+import './modules/actions';
+//export
 export default $;
