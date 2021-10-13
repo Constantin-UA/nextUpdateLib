@@ -174,7 +174,7 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.html = function (content
 };
 
 _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.eq = function (i) {
-  if (!i) {
+  if (i === undefined) {
     return this;
   }
 
@@ -224,6 +224,61 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.find = function (selecto
     }
 
     numberOfItems += arr.length;
+  }
+
+  this.length = numberOfItems;
+  const objLength = Object.keys(this).length;
+
+  for (; numberOfItems < objLength; numberOfItems++) {
+    delete this[numberOfItems];
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.closest = function (selector) {
+  if (!selector) {
+    return this;
+  }
+
+  let counter = 0;
+
+  for (let i = 0; i < this.length; i++) {
+    if (!this[i].closest(selector)) {
+      continue;
+    }
+
+    this[i] = this[i].closest(selector);
+    counter++;
+  }
+
+  const objLength = Object.keys(this).length;
+
+  for (; counter < objLength; counter++) {
+    delete this[counter];
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.siblings = function () {
+  let numberOfItems = 0;
+  let counter = 0;
+  const copyObj = Object.assign({}, this);
+
+  for (let i = 0; i < copyObj.length; i++) {
+    const arr = copyObj[i].parentNode.children;
+
+    for (let j = 0; j < arr.length; j++) {
+      if (copyObj[i] === arr[j]) {
+        continue;
+      }
+
+      this[counter] = arr[j];
+      counter++;
+    }
+
+    numberOfItems += arr.length - 1;
   }
 
   this.length = numberOfItems;
@@ -516,10 +571,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
 
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.mouthBtn').click(mouthAAA);
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.mouthBtn').html('|(===)|');
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(6).log();
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.mouthBtn').addClass('mouthAll');
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.mouthBtn').click(mouthAAA); // html test
+
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.mouthBtn').html('|(===)|'); // eq test
+
+console.log('eq(): ');
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(6).log(); // addClass test
+
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.mouthBtn').addClass('mouthAll'); // click test
+
 Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.list-item').click(indexTest);
 
 function mouthAAA() {
@@ -530,9 +590,17 @@ function mouthAAA() {
 
 function indexTest() {
   console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])(this).index());
-}
+} //find test
 
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.wrapper').find('.list-item').log();
+
+console.log('find(): ');
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.wrapper').find('.list-item').log(); // closest test
+
+console.log('closest(): ');
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.list-item').eq(1).closest('.list').log(); // siblings test
+
+console.log('siblings(): ');
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.list-item').eq(0).siblings().log();
 
 /***/ })
 
