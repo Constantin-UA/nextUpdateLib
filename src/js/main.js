@@ -15,7 +15,12 @@ $('.list-item').click(indexTest);
 function mouthAAA() {
 	$('.right').toggleClass('active');
 	$('.left').toggleClass('active');
-	$('div').find('.active').log();
+	$('.right').fadeOut(800);
+}
+//fadeIn fadeOut test
+$('.hair').click(hairClick);
+function hairClick() {
+	$('.right').fadeIn(800);
 }
 
 function indexTest() {
